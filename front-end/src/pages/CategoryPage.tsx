@@ -17,7 +17,7 @@ function CategoryPage() {
       setLoading(true);
       const fetchProductsByCategory = async () => {
         try {
-          const response = await apiClient.get<Product[]>(`/api/products/category/${categoryName}`);
+          const response = await apiClient.get<Product[]>(`/products/category/${categoryName}`);
           setProducts(response.data);
         } catch (error) {
           console.error(`Erro ao buscar produtos da categoria ${categoryName}:`, error);

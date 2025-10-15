@@ -5,7 +5,7 @@ import axios from 'axios';
 // Cria uma instância do axios com a URL base da nossa API
 const apiClient = axios.create({
   // REMOVEMOS AS ASPAS. Agora o valor da variável será lido.
-  baseURL: import.meta.env.VITE_API_URL, 
+  baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 // Interceptor de requisição: será executado ANTES de cada requisição

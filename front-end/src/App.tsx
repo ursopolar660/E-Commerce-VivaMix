@@ -1,6 +1,8 @@
+// frontend/src/App.tsx
+
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
-// Importação do Material-UI
+// 1. GARANTIR QUE AS IMPORTAÇÕES ESTÃO CORRETAS
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppBar, Toolbar, Typography, Box, Button } from '@mui/material';
@@ -19,18 +21,19 @@ import SearchBar from './components/SearchBar';
 import CategoryMenu from './components/CategoryMenu';
 import CategoryPage from './pages/CategoryPage';
 
+// Linha para depuração da variável de ambiente (mantida para a próxima etapa)
+console.log('VITE_API_URL no build:', import.meta.env.VITE_API_URL);
 
-// Criação do tema (mantive 'light' como no seu original)
+// Criação do tema
 const theme = createTheme({
   palette: {
     mode: 'light',
   },
 });
 
-// Componente de Cabeçalho separado para poder acessar o contexto de autenticação
+// --- COMPONENTE HEADER ---
 function Header() {
   const { token, logout } = useAuth();
-
   return (
     <AppBar position="static">
       <Toolbar>
@@ -39,56 +42,39 @@ function Header() {
             Viva Mix Store
           </Link>
         </Typography>
-        <Box sx={{ ml: 2 }}>
-          <CategoryMenu />
-        </Box>
+        <Box sx={{ ml: 2 }}><CategoryMenu /></Box>
         <SearchBar />
-        <Button component={Link} to="/admin" color="inherit" sx={{ ml: 2 }}>
-          Admin
-        </Button>
-        {/* Renderiza o botão de "Sair" apenas se o usuário estiver logado */}
-        {token && (
-          <Button color="inherit" onClick={logout} sx={{ ml: 1 }}>
-            Sair
-          </Button>
-        )}
+        <Button component={Link} to="/admin" color="inherit" sx={{ ml: 2 }}>Admin</Button>
+        {token && <Button color="inherit" onClick={logout} sx={{ ml: 1 }}>Sair</Button>}
       </Toolbar>
     </AppBar>
   );
 }
 
-// Componente principal da aplicação
+// --- COMPONENTE APP ---
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         <AuthProvider>
+          {/* O Header agora está dentro de todos os providers necessários */}
           <Header />
           <main>
             <Routes>
-              {/* Rotas Públicas */}
               <Route path="/" element={<HomePage />} />
               <Route path="/produto/:id" element={<ProductDetailPage />} />
               <Route path="/search" element={<SearchResultsPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/category/:categoryName" element={<CategoryPage />} />
-              
-              {/* Rota Protegida */}
               <Route 
                 path="/admin" 
-                element={
-                  <ProtectedRoute>
-                    <AdminPage />
-                  </ProtectedRoute>
-                } 
+                element={<ProtectedRoute><AdminPage /></ProtectedRoute>} 
               />
             </Routes>
           </main>
         </AuthProvider>
       </BrowserRouter>
-      </ThemeProvider>
     </>
   );
 }

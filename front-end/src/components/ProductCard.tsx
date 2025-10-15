@@ -39,3 +39,5 @@ export default function ProductCard({ product }: { product: Product }) {
     </Grid>
   );
 }
+
+export { ProductCard }; // Exportação nomeada para compatibilidade com importações anteriores
