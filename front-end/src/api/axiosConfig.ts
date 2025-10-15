@@ -2,10 +2,12 @@
 
 import axios from 'axios';
 
+
+
 // Cria uma instância do axios com a URL base da nossa API
 const apiClient = axios.create({
   // A URL PRECISA ser COMPLETA, incluindo http://, o host e a porta do SEU back-end
-  baseURL: 'http://localhost:3001/api',
+  baseURL: 'import.meta.env.VITE_API_URL' as string, // Exemplo: 'http://localhost:3001'
 });
 
 // Interceptor de requisição: será executado ANTES de cada requisição

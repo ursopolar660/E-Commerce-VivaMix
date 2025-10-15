@@ -5,6 +5,7 @@ import apiClient from '../api/axiosConfig';
 import { Product } from '../types';
 import { Link } from 'react-router-dom'; // 1. Importe o Link
 import CategoryMenu from '../components/CategoryMenu'; // Importe o menu
+import axios from '../api/axiosConfig';
 
 // Garanta que todas estas importações do MUI estão presentes
 import {
@@ -57,7 +58,7 @@ function HomePage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await apiClient.get<Product[]>('/products');
+        const response = await apiClient.get<Product[]>('/api/products');
         setProducts(response.data);
       } catch (error) {
         console.error('Erro ao buscar produtos:', error);

@@ -16,12 +16,13 @@ import { useAuth } from './context/AuthContext';
 import { AuthProvider } from './context/AuthContext';
 import CategoryMenu from './components/CategoryMenu';
 import CategoryPage from './pages/CategoryPage';
-
 const darkTheme = createTheme({
   palette: {
     mode: 'light',
   },
 });
+
+console.log('VITE_API_URL no build:', import.meta.env.VITE_API_URL);
 
 // Componente de Cabeçalho separado para poder acessar o contexto de autenticação
 function Header() {
