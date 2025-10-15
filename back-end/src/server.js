@@ -28,7 +28,8 @@ const app = express();
 
 const allowedOrigins = [
   'https://e-commerce-viva-mix.vercel.app', // URL de produção (sem a barra no final)
-  'http://localhost:5173'                  // URL de desenvolvimento local
+  'http://localhost:5173',
+  'https://vivamix.marcostuliogc.com.br/'                  // URL de desenvolvimento local
 ];
 
 const corsOptions = {
