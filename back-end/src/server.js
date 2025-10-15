@@ -51,8 +51,8 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Rotas da API
-app.use('/api/products', productRoutes);
-app.use('/api/auth/login', authRoutes);
+app.use('/api', productRoutes);
+app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
 app.get('/health', async (req, res) => {
   res.send('API Viva Mix funcionando!');
