@@ -26,6 +26,13 @@ mongoose.connect(process.env.DATABASE_URL)
 
 const app = express();
 
+const frontEndUrl = 'https://e-commerce-viva-mix.vercel.app/';
+
+// Configure o CORS para permitir requisições APENAS do seu front-end
+app.use(cors({
+  origin: frontEndUrl
+}));
+
 // Configuração de CORS
 const corsOptions = {
   origin: 'http://localhost:5173',
