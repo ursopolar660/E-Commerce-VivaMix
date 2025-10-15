@@ -25,6 +25,7 @@ mongoose.connect(process.env.DATABASE_URL)
   .catch((err) => console.error('Erro ao conectar ao MongoDB:', err));
 
 const app = express();
+const router = express.Router();
 
 const allowedOrigins = [
   'https://e-commerce-viva-mix.vercel.app', // URL de produção (sem a barra no final)
@@ -53,6 +54,9 @@ app.use(express.json());
 app.use('/api/products', productRoutes);
 app.use('/api/auth/login', authRoutes);
 app.use('/api', uploadRoutes);
+router.get('/health', async (req, res) => {
+  res.send('API Viva Mix funcionando!');
+});
 
 const PORT = process.env.PORT || 3001;
 
