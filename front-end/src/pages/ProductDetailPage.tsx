@@ -17,7 +17,7 @@ function ProductDetailPage() {
     if (id) {
       const fetchProduct = async () => {
         try {
-          const response = await apiClient.get<Product>(`/products/${id}`);
+          const response = await apiClient.get<Product>(`/api/products/${id}`);
           setProduct(response.data);
         } catch (error) {
           console.error('Erro ao buscar detalhes do produto:', error);

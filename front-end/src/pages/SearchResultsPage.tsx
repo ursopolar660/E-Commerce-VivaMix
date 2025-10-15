@@ -15,7 +15,7 @@ function SearchResultsPage() {
     if (query) {
       const fetchResults = async () => {
         try {
-          const response = await apiClient.get<Product[]>(`/products/search?q=${query}`);
+          const response = await apiClient.get<Product[]>(`/api/products/search?q=${query}`);
           setProducts(response.data);
         } catch (error) {
           console.error('Erro ao buscar resultados:', error);

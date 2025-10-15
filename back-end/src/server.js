@@ -26,27 +26,32 @@ mongoose.connect(process.env.DATABASE_URL)
 
 const app = express();
 
-const frontEndUrl = 'https://e-commerce-viva-mix.vercel.app/';
+const allowedOrigins = [
+  'https://e-commerce-viva-mix.vercel.app', // URL de produção (sem a barra no final)
+  'http://localhost:5173'                  // URL de desenvolvimento local
+];
 
-// Configure o CORS para permitir requisições APENAS do seu front-end
-app.use(cors({
-  origin: frontEndUrl
-}));
-
-// Configuração de CORS
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: function (origin, callback) {
+    // Permite requisições sem 'origin' (como de apps mobile ou Postman)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
+
 app.use(cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
 
 // Rotas da API
-app.use('/api', productRoutes);
-app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/auth/login', authRoutes);
 app.use('/api', uploadRoutes);
 
 const PORT = process.env.PORT || 3001;

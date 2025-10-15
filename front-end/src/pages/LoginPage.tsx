@@ -15,7 +15,7 @@ function LoginPage() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await apiClient.post('/auth/login', { email, password });
+      const response = await apiClient.post('/api/auth/login', { email, password });
       const { token } = response.data;
       login(token); // 3. Chame a função login do contexto
     } catch (err) {

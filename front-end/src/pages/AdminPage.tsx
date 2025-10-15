@@ -41,7 +41,7 @@ function AdminPage() {
   // Busca os produtos da API
   const fetchProducts = async () => {
     try {
-      const response = await apiClient.get<Product[]>('/products');
+      const response = await apiClient.get<Product[]>('/api/products');
       setProducts(response.data);
     } catch (error) {
       console.error('Erro ao buscar produtos:', error);
@@ -115,7 +115,7 @@ function AdminPage() {
     try {
       if (editingId) {
         // Lógica de UPDATE (PUT)
-        await apiClient.put(`/products/${editingId}`, productData);
+        await apiClient.put(`/api/products/${editingId}`, productData);
         alert('Produto atualizado com sucesso!');
       } else {
         // Lógica de CREATE (POST)
@@ -149,7 +149,7 @@ function AdminPage() {
   const handleDelete = async () => {
     if (!productToDelete) return;
     try {
-      await apiClient.delete(`/products/${productToDelete._id}`);
+      await apiClient.delete(`/api/products/${productToDelete._id}`);
       alert('Produto deletado com sucesso!');
       setProductToDelete(null);
       fetchProducts();
