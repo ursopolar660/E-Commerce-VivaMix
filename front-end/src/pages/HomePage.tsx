@@ -1,13 +1,13 @@
 // frontend/src/pages/HomePage.tsx
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+// 1. Apenas UMA importação para nossa instância do Axios
 import apiClient from '../api/axiosConfig';
 import { Product } from '../types';
-import { Link } from 'react-router-dom'; // 1. Importe o Link
-import CategoryMenu from '../components/CategoryMenu'; // Importe o menu
-import axios from '../api/axiosConfig';
 
-// Garanta que todas estas importações do MUI estão presentes
+// Importações do Material-UI
 import {
   Container,
   Typography,
@@ -19,6 +19,8 @@ import {
   Button
 } from '@mui/material';
 
+// --- COMPONENTE ProductCard ---
+// (Em um projeto maior, este componente estaria em seu próprio arquivo)
 export const ProductCard = ({ product }: { product: Product }) => (
   <Grid item xs={12} sm={6} md={4}>
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -42,22 +44,23 @@ export const ProductCard = ({ product }: { product: Product }) => (
         </Typography>
       </CardContent>
       <CardActions>
-        {/* 2. Transforme o botão em um Link */}
-        <Button size="small" component={Link} to={`/produto/${product._id}`} variant='outlined' sx={{ textAlign: 'center', '&:hover': { backgroundColor: '#1976d2', color: '#fff' } }}>
+        <Button size="small" component={Link} to={`/produto/${product._id}`} variant='outlined'>
           Ver Detalhes
         </Button>
-        <Button size="small" variant="outlined" sx={{ backgroundColor: '#fff', '&:hover': { backgroundColor: '#1976d2', color: '#fff' } }}>Adicionar ao Carrinho</Button>
+        <Button size="small" variant="contained">Adicionar ao Carrinho</Button>
       </CardActions>
     </Card>
   </Grid>
 );
 
+// --- COMPONENTE HomePage ---
 function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        // 2. A chamada de API está perfeita, usando a instância correta e o endpoint certo.
         const response = await apiClient.get<Product[]>('/api/products');
         setProducts(response.data);
       } catch (error) {
@@ -69,28 +72,17 @@ function HomePage() {
   }, []);
 
   return (
-    <>
-
     <Container sx={{ py: 4 }} maxWidth="lg">
-      <Grid container spacing={4}>
-      
-        
-        {/* Coluna para os produtos */}
-        <Grid item xs={12} md={9}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Vitrine da Loja
-          </Typography>
-          <Grid container spacing={3}>
-            {products.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </Grid>
-        </Grid>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Vitrine da Loja
+      </Typography>
+      <Grid container spacing={3}>
+        {products.map((product) => (
+          <ProductCard key={product._id} product={product} />
+        ))}
       </Grid>
     </Container>
-    </>
   );
 }
-
 
 export default HomePage;
